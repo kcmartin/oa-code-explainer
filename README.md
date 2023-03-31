@@ -7,5 +7,5 @@ This is project 6 for the OpenAI + Python course
 
 Notes:
 
-No typos this time--progress!
-To do: indent docstring text
+- No typos this time--progress!
+- Was able to update the merge function correctly forrmat the indentation of the docstring after a lengthy conversation with ChatGPT
