@@ -11,11 +11,21 @@ def docstring_prompt(code):
     prompt = f"{code}\n # A high quality python docstring of the above python function:\n\"\"\""
     return prompt
 
-def merge_docstring_and_function(function_string,docstring):
+def merge_docstring_and_function(function_string, docstring):
     split = function_string.split("\n")
     first_part, second_part = split[0], split[1:]
-    merged_function = first_part + "\n" + '    """' + docstring + '    """' + "\n" + "\n".join(second_part)
+    
+    # Determine the indentation level of the opening """ of the docstring
+    opening_quotes_indent = len(first_part) - len(first_part.lstrip()) + 4
+    
+    # Indent the docstring lines, except for the closing """
+    docstring_lines = docstring.strip().split("\n")
+    indented_docstring = "\n".join(" " * opening_quotes_indent + line if i < len(docstring_lines) - 1 else " " * opening_quotes_indent + line for i, line in enumerate(docstring_lines))
+    
+    merged_function = first_part + '\n' + ' ' * opening_quotes_indent + '"""' + '\n' + indented_docstring + '\n' + ' ' * opening_quotes_indent + '"""' + "\n" + "\n".join(second_part)
+    
     return merged_function
+
 
 ### Extract all functions from the functions.py file ###
 ### getmembers returns a tuple, where the first element is the name of the function and the second element is the function itself ###
